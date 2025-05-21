@@ -30,7 +30,7 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
+    }0
 
     public void setUsername(String username) {
         this.username = username;
