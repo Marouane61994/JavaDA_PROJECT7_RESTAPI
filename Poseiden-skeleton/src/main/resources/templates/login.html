@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <style>
+    body {
+        background-color: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+    }
+    .login-box {
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        min-width: 350px;
+    }
+    legend {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="login-box">
+  <h3 class="text-center mb-4">Login Screen</h3>
+
+  <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+  <div th:if="${logoutMessage}" class="alert alert-success" th:text="${logoutMessage}"></div>
+
+  <form th:action="@{app/login}" method="post">
+    <fieldset>
+      <legend class="text-center">Login with Username and Password</legend>
+
+      <div class="mb-3">
+        <label for="username" class="form-label">User:</label>
+        <input type="text" class="form-control" id="username" name="username" required/>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required/>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+</body>
+</html>

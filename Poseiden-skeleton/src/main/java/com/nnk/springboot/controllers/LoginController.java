@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -15,11 +16,18 @@ public class LoginController {
     private UserRepository userRepository;
 
     @GetMapping("login")
-    public ModelAndView login() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+                              @RequestParam(value = "logout", required = false) String logout) {
+        ModelAndView mav = new ModelAndView("login");
+        if (error != null) {
+            mav.addObject("errorMessage", "Invalid username or password.");
+        }
+        if (logout != null) {
+            mav.addObject("logoutMessage", "You have been logged out successfully.");
+        }
         return mav;
     }
+
 
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
@@ -32,9 +40,10 @@ public class LoginController {
     @GetMapping("error")
     public ModelAndView error() {
         ModelAndView mav = new ModelAndView();
-        String errorMessage= "You are not authorized for the requested data.";
+        String errorMessage = "You are not authorized for the requested data.";
         mav.addObject("errorMsg", errorMessage);
         mav.setViewName("403");
         return mav;
     }
+
 }

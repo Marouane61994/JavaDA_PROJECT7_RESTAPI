@@ -3,7 +3,8 @@ package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+
+
 
 @Entity
 @Table(name = "users")
@@ -30,7 +31,7 @@ public class User {
 
     public String getUsername() {
         return username;
-    }0
+    }
 
     public void setUsername(String username) {
         this.username = username;
