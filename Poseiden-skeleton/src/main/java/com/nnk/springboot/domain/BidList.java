@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -18,12 +19,16 @@ public class BidList {
         @Column(name = "BidListId")
         private Integer bidListId;
 
+        @NotBlank(message = "Account is mandatory")
         @Column(name = "account")
         private String account;
 
+        @NotBlank(message = "Type is mandatory")
         @Column(name = "type")
         private String type;
 
+        @NotNull(message = "Bid Quantity is mandatory")
+        @DecimalMin(value = "0.0", inclusive = false, message = "Bid Quantity must be greater than 0")
         @Column(name = "bidQuantity")
         private Double bidQuantity;
 

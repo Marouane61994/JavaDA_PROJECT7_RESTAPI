@@ -30,10 +30,7 @@
 <div class="login-box">
   <h3 class="text-center mb-4">Login Screen</h3>
 
-  <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-  <div th:if="${logoutMessage}" class="alert alert-success" th:text="${logoutMessage}"></div>
-
-  <form th:action="@{app/login}" method="post">
+  <form th:action="@{login}" method="post">
     <fieldset>
       <legend class="text-center">Login with Username and Password</legend>
 
