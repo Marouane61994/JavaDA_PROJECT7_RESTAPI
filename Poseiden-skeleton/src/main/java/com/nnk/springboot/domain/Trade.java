@@ -2,6 +2,9 @@ package com.nnk.springboot.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -18,12 +21,16 @@ public class Trade {
     private Integer tradeId;
 
     @Column(name = "account")
+    @NotBlank(message = "Account is mandatory")
     private String account;
 
     @Column(name = "type")
+    @NotBlank(message = "Type is mandatory")
     private String type;
 
     @Column(name = "buyQuantity")
+    @NotNull(message = "Buy quantity is mandatory")
+    @Positive(message = "Buy quantity must be positive")
     private Double buyQuantity;
 
     @Column(name = "sellQuantity")

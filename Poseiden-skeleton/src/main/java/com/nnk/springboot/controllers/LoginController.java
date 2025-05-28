@@ -1,10 +1,14 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -18,6 +22,24 @@ public class LoginController {
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("login");
+        return mav;
+    }
+
+    @PostMapping("login")
+    public ModelAndView loginPost(@RequestParam String username,
+                                  @RequestParam String password,
+                                  HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        User user = userRepository.findByUsername(username);
+
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("user", user);
+            mav.setViewName("redirect:/trade/list");
+        } else {
+            mav.addObject("error", "Invalid username or password");
+            mav.setViewName("login");
+        }
+
         return mav;
     }
 

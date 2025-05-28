@@ -7,84 +7,88 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
+/**
+ * Represents a BidList entity in the application.
+ * Contains information related to market bid entries.
+ */
 
 @Entity
 @Table(name = "bidlist")
 @Data
 public class BidList {
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "BidListId")
-        private Integer bidListId;
 
-        @NotBlank(message = "Account is mandatory")
-        @Column(name = "account")
-        private String account;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BidListId")
+    private Integer bidListId;
 
-        @NotBlank(message = "Type is mandatory")
-        @Column(name = "type")
-        private String type;
+    @NotBlank(message = "Account is mandatory")
+    @Column(name = "account")
+    private String account;
 
-        @NotNull(message = "Bid Quantity is mandatory")
-        @DecimalMin(value = "0.0", inclusive = false, message = "Bid Quantity must be greater than 0")
-        @Column(name = "bidQuantity")
-        private Double bidQuantity;
+    @NotBlank(message = "Type is mandatory")
+    @Column(name = "type")
+    private String type;
 
-        @Column(name = "askQuantity")
-        private Double askQuantity;
+    @NotNull(message = "Bid Quantity is mandatory")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Bid Quantity must be greater than 0")
+    @Column(name = "bidQuantity")
+    private Double bidQuantity;
 
-        @Column(name = "bid")
-        private Double bid;
+    @Column(name = "askQuantity")
+    private Double askQuantity;
 
-        @Column(name = "ask")
-        private Double ask;
+    @Column(name = "bid")
+    private Double bid;
 
-        @Column(name = "benchmark")
-        private String benchmark;
+    @Column(name = "ask")
+    private Double ask;
 
-        @Column(name = "bidListDate")
-        private Timestamp bidListDate;
+    @Column(name = "benchmark")
+    private String benchmark;
 
-        @Column(name = "commentary")
-        private String commentary;
+    @Column(name = "bidListDate")
+    private Timestamp bidListDate;
 
-        @Column(name = "security")
-        private String security;
+    @Column(name = "commentary")
+    private String commentary;
 
-        @Column(name = "status")
-        private String status;
+    @Column(name = "security")
+    private String security;
 
-        @Column(name = "trader")
-        private String trader;
+    @Column(name = "status")
+    private String status;
 
-        @Column(name = "book")
-        private String book;
+    @Column(name = "trader")
+    private String trader;
 
-        @Column(name = "creationName")
-        private String creationName;
+    @Column(name = "book")
+    private String book;
 
-        @Column(name = "creationDate")
-        private Timestamp creationDate;
+    @Column(name = "creationName")
+    private String creationName;
 
-        @Column(name = "revisionName")
-        private String revisionName;
+    @Column(name = "creationDate")
+    private Timestamp creationDate;
 
-        @Column(name = "revisionDate")
-        private Timestamp revisionDate;
+    @Column(name = "revisionName")
+    private String revisionName;
 
-        @Column(name = "dealName")
-        private String dealName;
+    @Column(name = "revisionDate")
+    private Timestamp revisionDate;
 
-        @Column(name = "dealType")
-        private String dealType;
+    @Column(name = "dealName")
+    private String dealName;
 
-        @Column(name = "sourceListId")
-        private String sourceListId;
+    @Column(name = "dealType")
+    private String dealType;
 
-        @Column(name = "side")
-        private String side;
-    }
+    @Column(name = "sourceListId")
+    private String sourceListId;
+
+    @Column(name = "side")
+    private String side;
+}
 
 
