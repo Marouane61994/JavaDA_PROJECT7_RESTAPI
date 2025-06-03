@@ -6,11 +6,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+/**
+ * Entity class representing a rule used in the application.
+ * Each {@code RuleName} contains metadata including a name, description,
+ * JSON structure, SQL template, and associated SQL strings.
+ */
 @Entity
 @Table(name = "rulename")
 @Data
 public class RuleName {
-    // TODO: Map columns in data table RULENAME with corresponding java fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
