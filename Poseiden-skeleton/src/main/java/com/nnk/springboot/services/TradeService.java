@@ -38,24 +38,22 @@ public class TradeService {
      * Saves a new trade to the repository.
      *
      * @param trade the trade to save
-     * @return the saved trade
      */
-    public Trade saveTrade(Trade trade) {
-        return tradeRepository.save(trade);
+    public void saveTrade(Trade trade) {
+        tradeRepository.save(trade);
     }
 
     /**
      * Updates an existing trade.
      *
      * @param trade the trade object with updated data
-     * @return the updated trade
      * @throws IllegalArgumentException if trade ID does not exist
      */
-    public Trade updateTrade(Trade trade) {
+    public void updateTrade(Trade trade) {
         if (!tradeRepository.existsById(trade.getTradeId())) {
             throw new IllegalArgumentException("Trade not found with id: " + trade.getTradeId());
         }
-        return tradeRepository.save(trade);
+        tradeRepository.save(trade);
     }
 
     /**
