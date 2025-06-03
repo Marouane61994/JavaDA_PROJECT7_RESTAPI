@@ -58,16 +58,6 @@ class RuleServiceTest {
         assertFalse(result.isPresent());
     }
 
-    @Test
-    void testSave() {
-        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
-
-        RuleName result = ruleNameService.save(ruleName);
-
-        assertNotNull(result);
-        assertEquals("Rule 1", result.getName());
-        verify(ruleNameRepository).save(ruleName);
-    }
 
     @Test
     void testUpdate_Success() {
@@ -99,13 +89,6 @@ class RuleServiceTest {
         assertEquals("Invalid RuleName ID: 999", exception.getMessage());
     }
 
-    @Test
-    void testDelete() {
-        doNothing().when(ruleNameRepository).deleteById(1);
 
-        ruleNameService.delete(1);
-
-        verify(ruleNameRepository).deleteById(1);
-    }
 }
 

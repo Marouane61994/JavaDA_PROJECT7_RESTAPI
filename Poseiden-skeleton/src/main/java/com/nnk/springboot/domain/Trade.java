@@ -20,62 +20,62 @@ public class Trade {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TradeId")
+    @Column
     private Integer tradeId;
 
-    @Column(name = "account")
+    @Column
     @NotBlank(message = "Account is mandatory")
     private String account;
 
-    @Column(name = "type")
+    @Column
     @NotBlank(message = "Type is mandatory")
     private String type;
 
-    @Column(name = "buyQuantity")
+    @Column
     @NotNull(message = "Buy quantity is mandatory")
     @Positive(message = "Buy quantity must be positive")
     private Double buyQuantity;
 
-    @Column(name = "sellQuantity")
+    @Column
     private Double sellQuantity;
 
-    @Column(name = "buyPrice")
+    @Column
     private Double buyPrice;
 
-    @Column(name = "sellPrice")
+    @Column
     private Double sellPrice;
 
-    @Column(name = "tradeDate")
+    @Column
     private Timestamp tradeDate;
 
-    @Column(name = "security")
+    @Column
     private String security;
 
-    @Column(name = "status")
+    @Column
     private String status;
 
-    @Column(name = "trader")
+    @Column
     private String trader;
 
-    @Column(name = "benchmark")
+    @Column
     private String benchmark;
 
-    @Column(name = "book")
+    @Column
     private String book;
 
-    @Column(name = "creationName")
+    @Column
     private String creationName;
 
-    @Column(name = "creationDate")
+    @Column
     private Timestamp creationDate;
 
-    @Column(name = "revisionName")
+    @Column
     private String revisionName;
 
-    @Column(name = "revisionDate")
+    @Column
     private Timestamp revisionDate;
 
-    @Column(name = "dealName")
+    @Column
     private String dealName;
 
     @Column(name = "dealType")

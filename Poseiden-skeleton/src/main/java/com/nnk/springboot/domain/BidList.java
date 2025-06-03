@@ -20,74 +20,74 @@ public class BidList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BidListId")
+    @Column
     private Integer bidListId;
 
     @NotBlank(message = "Account is mandatory")
-    @Column(name = "account")
+    @Column
     private String account;
 
     @NotBlank(message = "Type is mandatory")
-    @Column(name = "type")
+    @Column
     private String type;
 
     @NotNull(message = "Bid Quantity is mandatory")
     @DecimalMin(value = "0.0", inclusive = false, message = "Bid Quantity must be greater than 0")
-    @Column(name = "bidQuantity")
+    @Column
     private Double bidQuantity;
 
-    @Column(name = "askQuantity")
+    @Column
     private Double askQuantity;
 
-    @Column(name = "bid")
+    @Column
     private Double bid;
 
-    @Column(name = "ask")
+    @Column
     private Double ask;
 
-    @Column(name = "benchmark")
+    @Column
     private String benchmark;
 
-    @Column(name = "bidListDate")
+    @Column
     private Timestamp bidListDate;
 
-    @Column(name = "commentary")
+    @Column
     private String commentary;
 
-    @Column(name = "security")
+    @Column
     private String security;
 
-    @Column(name = "status")
+    @Column
     private String status;
 
-    @Column(name = "trader")
+    @Column
     private String trader;
 
-    @Column(name = "book")
+    @Column
     private String book;
 
-    @Column(name = "creationName")
+    @Column
     private String creationName;
 
-    @Column(name = "creationDate")
+    @Column
     private Timestamp creationDate;
 
-    @Column(name = "revisionName")
+    @Column
     private String revisionName;
 
-    @Column(name = "revisionDate")
+    @Column
     private Timestamp revisionDate;
 
-    @Column(name = "dealName")
+    @Column
     private String dealName;
 
-    @Column(name = "dealType")
+    @Column
     private String dealType;
 
-    @Column(name = "sourceListId")
+    @Column
     private String sourceListId;
 
-    @Column(name = "side")
+    @Column
     private String side;
 }
 

@@ -18,22 +18,22 @@ import lombok.Data;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column
     private Integer id;
 
-    @Column(name = "moodysRating")
+    @Column
     @NotBlank(message = "MoodysRating is mandatory")
     private String moodysRating;
 
-    @Column(name = "sandPRating")
+    @Column
     @NotBlank(message = "SandPRating is mandatory")
     private String sandPRating;
 
-    @Column(name = "fitchRating")
+    @Column
     @NotBlank(message = "FitchRating is mandatory")
     private String fitchRating;
 
-    @Column(name = "orderNumber")
+    @Column
     @NotNull(message = "Order is mandatory")
     @Min(value = 1, message = "Order must be positive")
     private Integer orderNumber;

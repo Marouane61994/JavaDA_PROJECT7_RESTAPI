@@ -17,25 +17,25 @@ public class CurvePoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column
     private Integer id;
 
     @NotNull(message = "must be not null")
-    @Column(name = "curveId")
+    @Column
     private Integer curveId;
 
-    @Column(name = "asOfDate")
+    @Column
     private Timestamp asOfDate;
 
     @NotNull(message = "Term is mandatory")
-    @Column(name = "term")
+    @Column
     private Double term;
 
 
     @NotNull(message = "Value is mandatory")
-    @Column(name = "value")
+    @Column
     private Double value;
 
-    @Column(name = "creationDate")
+    @Column
     private Timestamp creationDate;
 }
