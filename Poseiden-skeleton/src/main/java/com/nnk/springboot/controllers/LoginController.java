@@ -59,5 +59,11 @@ public class LoginController {
         mav.setViewName("403");
         return mav;
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // supprime la session
+        return "redirect:/app/login?logout"; // redirection vers la page de login
+    }
+
 
 }

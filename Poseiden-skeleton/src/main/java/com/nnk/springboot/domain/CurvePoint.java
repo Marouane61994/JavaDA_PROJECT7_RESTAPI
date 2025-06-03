@@ -6,19 +6,22 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Timestamp;
-
+/**
+ * Entity representing a point on a curve, used for financial modeling or rate curves.
+ * Each point includes identifiers, time-based values, and metadata for auditing.
+ */
 @Entity
 @Table(name = "curvepoint")
 @Data
 public class CurvePoint {
-    // TODO: Map columns in data table CURVEPOINT with corresponding java fields
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
 
-    @Column(name = "CurveId")
+    @NotNull(message = "must be not null")
+    @Column(name = "curveId")
     private Integer curveId;
 
     @Column(name = "asOfDate")
