@@ -17,26 +17,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class TradeController {
-    // TODO: Inject Trade service
+
     @Autowired
     private TradeService tradeService;
 
+    /**
+     * Displays the list of all trades.
+     * Adds the list of trades to the model for the view.
+     *
+     * @param session current HTTP session, used to get logged-in user info
+     * @param model   Spring Model to add attributes for rendering
+     * @return the view name "trade/list"
+     */
     @RequestMapping("/trade/list")
     public String home(HttpSession session, Model model) {
-        // TODO: find all Trade, add to model
         User user = (User) session.getAttribute("user");
         model.addAttribute("trades", tradeService.findAll());
         return "trade/list";
     }
+
 
     @GetMapping("/trade/add")
     public String addUser(Trade bid) {
         return "trade/add";
     }
 
+
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return Trade list
         if (result.hasErrors()) {
             return "trade/add";
         }
@@ -46,7 +54,6 @@ public class TradeController {
 
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Trade by Id and to model then show to the form
         Trade trade = tradeService.findById(id);
         model.addAttribute("trade", trade);
         return "trade/update";
@@ -55,7 +62,6 @@ public class TradeController {
     @PostMapping("/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                               BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Trade and return Trade list
         if (result.hasErrors()) {
             return "trade/update";
         }
@@ -66,7 +72,6 @@ public class TradeController {
 
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Trade by Id and delete the Trade, return to Trade list
         tradeService.deleteTrade(id);
         return "redirect:/trade/list";
     }

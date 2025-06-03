@@ -13,8 +13,11 @@ import java.sql.Timestamp;
 @Table(name = "trade")
 @Data
 public class Trade {
-    // TODO: Map columns in data table TRADE with corresponding java fields
 
+    /**
+     * Entity class that maps to the "trade" table in the database.
+     * Represents a financial trade with its various attributes.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TradeId")
