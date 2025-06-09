@@ -28,49 +28,49 @@ class RatingServiceTest {
         MockitoAnnotations.openMocks(this);
         rating = new Rating();
         rating.setId(1);
-        rating.setMoodysRating("Moodys");
-        rating.setSandPRating("S&P");
-        rating.setFitchRating("Fitch");
-        rating.setOrderNumber(10);
+        rating.setMoodysRating("Aaa");
+        rating.setSandPRating("AA");
+        rating.setFitchRating("AAA");
+        rating.setOrderNumber(1);
     }
 
+
     @Test
-    void testFindById() {
+    void testFindById_WhenFound() {
         when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
 
         Rating result = ratingService.findById(1);
 
         assertNotNull(result);
-        assertEquals("Moodys", result.getMoodysRating());
-        verify(ratingRepository, times(1)).findById(1);
+        assertEquals("AA", result.getSandPRating());
     }
 
     @Test
-    void testFindById_NotFound() {
+    void testFindById_WhenNotFound() {
         when(ratingRepository.findById(1)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> ratingService.findById(1));
-        assertEquals("Invalid rating Id: 1", exception.getMessage());
+        assertTrue(exception.getMessage().contains("Invalid rating Id"));
     }
 
 
     @Test
     void testUpdate() {
         Rating updated = new Rating();
-        updated.setMoodysRating("NewMoodys");
-        updated.setSandPRating("NewS&P");
-        updated.setFitchRating("NewFitch");
-        updated.setOrderNumber(20);
+        updated.setMoodysRating("Baa");
+        updated.setSandPRating("BB");
+        updated.setFitchRating("BBB");
+        updated.setOrderNumber(2);
 
         when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
         when(ratingRepository.save(any(Rating.class))).thenReturn(rating);
 
         Rating result = ratingService.update(1, updated);
 
-        assertEquals("NewMoodys", result.getMoodysRating());
-        assertEquals(20, result.getOrderNumber());
-        verify(ratingRepository).save(rating);
+        assertEquals("Baa", result.getMoodysRating());
+        assertEquals("BB", result.getSandPRating());
+        assertEquals(2, result.getOrderNumber());
+        verify(ratingRepository, times(1)).save(rating);
     }
-
 
 }

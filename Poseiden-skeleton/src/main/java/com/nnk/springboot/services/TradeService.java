@@ -40,20 +40,18 @@ public class TradeService {
      * @param trade the trade to save
      */
     public void saveTrade(Trade trade) {
-        tradeRepository.save(trade);
+         tradeRepository.save(trade);
     }
 
     /**
      * Updates an existing trade.
      *
-     * @param trade the trade object with updated data
-     * @throws IllegalArgumentException if trade ID does not exist
+     * @param id           the trade object with updated data
+     * @param updatedTrade the updated BidList entity.
      */
-    public void updateTrade(Trade trade) {
-        if (!tradeRepository.existsById(trade.getTradeId())) {
-            throw new IllegalArgumentException("Trade not found with id: " + trade.getTradeId());
-        }
-        tradeRepository.save(trade);
+    public void updateTrade(Integer id, Trade updatedTrade) {
+       updatedTrade.setTradeId(id);
+        tradeRepository.save(updatedTrade);
     }
 
     /**
@@ -63,9 +61,6 @@ public class TradeService {
      * @throws IllegalArgumentException if trade ID does not exist
      */
     public void deleteTrade(Integer id) {
-        if (!tradeRepository.existsById(id)) {
-            throw new IllegalArgumentException("Trade not found with id: " + id);
-        }
         tradeRepository.deleteById(id);
     }
 

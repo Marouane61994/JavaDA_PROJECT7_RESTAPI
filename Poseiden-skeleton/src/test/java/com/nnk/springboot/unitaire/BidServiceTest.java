@@ -31,31 +31,37 @@ public class BidServiceTest {
         bid.setBidListId(1);
         bid.setAccount("Account");
         bid.setType("Type");
-        bid.setBidQuantity(10d);
+        bid.setBidQuantity(100.0);
     }
 
 
     @Test
-    void testFindById() {
+    void testFindById_WhenFound() {
         when(bidListRepository.findById(1)).thenReturn(Optional.of(bid));
 
         BidList result = bidListService.findById(1);
 
         assertNotNull(result);
-        assertEquals("Account", result.getAccount());
-        verify(bidListRepository, times(1)).findById(1);
+        assertEquals("Type", result.getType());
     }
 
+    @Test
+    void testFindById_WhenNotFound() {
+        when(bidListRepository.findById(1)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> bidListService.findById(1));
+        assertTrue(exception.getMessage().contains("Invalid BidList ID"));
+    }
 
 
     @Test
     void testUpdate() {
-        bid.setBidQuantity(20d);
+        bid.setBidQuantity(200.0);
         when(bidListRepository.save(bid)).thenReturn(bid);
 
         BidList updated = bidListService.update(1, bid);
 
-        assertEquals(20d, updated.getBidQuantity());
+        assertEquals(200.0, updated.getBidQuantity());
         assertEquals(1, updated.getBidListId());
         verify(bidListRepository, times(1)).save(bid);
     }

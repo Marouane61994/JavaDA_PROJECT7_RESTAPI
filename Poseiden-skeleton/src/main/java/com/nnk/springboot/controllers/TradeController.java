@@ -66,7 +66,7 @@ public class TradeController {
             return "trade/update";
         }
         trade.setTradeId(id);
-        tradeService.updateTrade(trade);
+        tradeService.updateTrade(id,trade);
         return "redirect:/trade/list";
     }
 

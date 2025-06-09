@@ -42,10 +42,9 @@ public class BidListService {
      * Saves a new BidList entry to the database.
      *
      * @param bid the BidList entity to save.
-     * @return the saved BidList entity.
      */
-    public BidList save(BidList bid) {
-        return bidListRepository.save(bid);
+    public void save(BidList bid) {
+        bidListRepository.save(bid);
     }
 
     /**

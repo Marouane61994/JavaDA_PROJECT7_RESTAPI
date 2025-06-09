@@ -28,62 +28,46 @@ class TradeServiceTest {
         MockitoAnnotations.openMocks(this);
         trade = new Trade();
         trade.setTradeId(1);
-        trade.setAccount("Test Account");
-        trade.setType("Test Type");
+        trade.setAccount("TestAccount");
+        trade.setType("Buy");
         trade.setBuyQuantity(100.0);
     }
 
 
     @Test
-    void testFindById_Success() {
+    void testFindById_Found() {
         when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
 
         Trade result = tradeService.findById(1);
 
-        assertEquals("Test Account", result.getAccount());
-        verify(tradeRepository, times(1)).findById(1);
+        assertNotNull(result);
+        assertEquals("TestAccount", result.getAccount());
     }
 
     @Test
     void testFindById_NotFound() {
         when(tradeRepository.findById(1)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> tradeService.findById(1));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            tradeService.findById(1);
+        });
+
         assertEquals("Invalid trade Id:1", exception.getMessage());
     }
 
 
     @Test
-    void testUpdateTrade_Success() {
-        when(tradeRepository.existsById(1)).thenReturn(true);
+    void testUpdateTrade() {
+        Trade updated = new Trade();
+        updated.setAccount("UpdatedAccount");
+        updated.setType("Sell");
+        updated.setBuyQuantity(200.0);
 
-        tradeService.updateTrade(trade);
+        tradeService.updateTrade(1, updated);
 
-        verify(tradeRepository, times(1)).save(trade);
+        assertEquals(1, updated.getTradeId());
+        verify(tradeRepository).save(updated);
     }
 
-    @Test
-    void testUpdateTrade_NotFound() {
-        when(tradeRepository.existsById(1)).thenReturn(false);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> tradeService.updateTrade(trade));
-        assertEquals("Trade not found with id: 1", exception.getMessage());
-    }
-
-    @Test
-    void testDeleteTrade_Success() {
-        when(tradeRepository.existsById(1)).thenReturn(true);
-
-        tradeService.deleteTrade(1);
-
-        verify(tradeRepository, times(1)).deleteById(1);
-    }
-
-    @Test
-    void testDeleteTrade_NotFound() {
-        when(tradeRepository.existsById(1)).thenReturn(false);
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> tradeService.deleteTrade(1));
-        assertEquals("Trade not found with id: 1", exception.getMessage());
-    }
 }

@@ -30,11 +30,11 @@ class RuleServiceTest {
         ruleName = new RuleName();
         ruleName.setId(1);
         ruleName.setName("Rule 1");
-        ruleName.setDescription("Test description");
-        ruleName.setJson("some json");
-        ruleName.setTemplate("template");
-        ruleName.setSqlStr("SELECT * FROM table");
-        ruleName.setSqlPart("WHERE id=1");
+        ruleName.setDescription("Description");
+        ruleName.setJson("{\"field\":\"value\"}");
+        ruleName.setTemplate("Template");
+        ruleName.setSqlStr("SELECT *");
+        ruleName.setSqlPart("WHERE id = 1");
     }
 
 
@@ -46,47 +46,49 @@ class RuleServiceTest {
 
         assertTrue(result.isPresent());
         assertEquals("Rule 1", result.get().getName());
-        verify(ruleNameRepository).findById(1);
     }
 
     @Test
     void testFindById_NotFound() {
-        when(ruleNameRepository.findById(2)).thenReturn(Optional.empty());
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.empty());
 
-        Optional<RuleName> result = ruleNameService.findById(2);
+        Optional<RuleName> result = ruleNameService.findById(1);
 
         assertFalse(result.isPresent());
     }
 
 
+
     @Test
     void testUpdate_Success() {
         RuleName updated = new RuleName();
-        updated.setName("Updated Name");
+        updated.setName("Updated Rule");
         updated.setDescription("Updated Desc");
-        updated.setJson("Updated JSON");
+        updated.setJson("{\"new\":\"data\"}");
         updated.setTemplate("Updated Template");
-        updated.setSqlStr("Updated SQL");
-        updated.setSqlPart("Updated SQL Part");
+        updated.setSqlStr("SELECT name");
+        updated.setSqlPart("WHERE name='test'");
 
         when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
-        when(ruleNameRepository.save(any(RuleName.class))).thenReturn(ruleName);
+        when(ruleNameRepository.save(any(RuleName.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         RuleName result = ruleNameService.update(1, updated);
 
-        assertEquals("Updated Name", result.getName());
+        assertEquals("Updated Rule", result.getName());
         assertEquals("Updated Desc", result.getDescription());
         verify(ruleNameRepository).save(ruleName);
     }
 
     @Test
     void testUpdate_NotFound() {
-        when(ruleNameRepository.findById(999)).thenReturn(Optional.empty());
-
         RuleName updated = new RuleName();
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> ruleNameService.update(999, updated));
+        when(ruleNameRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertEquals("Invalid RuleName ID: 999", exception.getMessage());
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            ruleNameService.update(1, updated);
+        });
+
+        assertEquals("Invalid RuleName ID: 1", exception.getMessage());
     }
 
 

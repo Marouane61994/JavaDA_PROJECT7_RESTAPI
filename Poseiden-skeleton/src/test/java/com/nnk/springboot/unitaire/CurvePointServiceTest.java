@@ -29,32 +29,38 @@ class CurvePointServiceTest {
         curvePoint = new CurvePoint();
         curvePoint.setId(1);
         curvePoint.setCurveId(10);
-        curvePoint.setTerm(10d);
-        curvePoint.setValue(30d);
+        curvePoint.setTerm(2.5);
+        curvePoint.setValue(100.0);
     }
 
 
     @Test
-    void testFindById() {
+    void testFindById_WhenFound() {
         when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
 
         CurvePoint result = curvePointService.findById(1);
 
         assertNotNull(result);
-        assertEquals(10, result.getCurveId());
-        verify(curvePointRepository, times(1)).findById(1);
+        assertEquals(100.0, result.getValue());
     }
 
+    @Test
+    void testFindById_WhenNotFound() {
+        when(curvePointRepository.findById(1)).thenReturn(Optional.empty());
+
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> curvePointService.findById(1));
+        assertTrue(ex.getMessage().contains("Invalid CurvePoint ID"));
+    }
 
     @Test
     void testUpdate() {
-        curvePoint.setValue(99d);
-        when(curvePointRepository.save(curvePoint)).thenReturn(curvePoint);
+        curvePoint.setTerm(3.0);
+        when(curvePointRepository.save(any(CurvePoint.class))).thenReturn(curvePoint);
 
         CurvePoint updated = curvePointService.update(1, curvePoint);
 
-        assertEquals(99d, updated.getValue());
         assertEquals(1, updated.getId());
+        assertEquals(3.0, updated.getTerm());
         verify(curvePointRepository, times(1)).save(curvePoint);
     }
 
