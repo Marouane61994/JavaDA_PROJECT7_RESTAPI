@@ -58,7 +58,7 @@ public class RatingController {
             return "rating/add";
         }
         ratingService.save(rating);
-        return "rating/add";
+        return "redirect:/rating/list";
     }
 
     /**

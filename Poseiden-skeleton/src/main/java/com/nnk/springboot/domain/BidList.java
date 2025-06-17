@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+
 import java.sql.Timestamp;
 
 /**
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "Bidlist")
 @Data
+
 public class BidList {
 
 

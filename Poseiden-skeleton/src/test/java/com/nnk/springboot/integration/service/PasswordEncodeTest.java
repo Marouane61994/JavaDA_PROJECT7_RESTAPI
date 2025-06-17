@@ -1,4 +1,4 @@
-package com.nnk.springboot.integration;
+package com.nnk.springboot.integration.service;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
