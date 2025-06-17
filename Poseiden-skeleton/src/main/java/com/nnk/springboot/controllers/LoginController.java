@@ -25,7 +25,7 @@ public class LoginController {
         return mav;
     }
 
-    @PostMapping("login")
+   /** @PostMapping("login")
     public ModelAndView loginPost(@RequestParam String username,
                                   @RequestParam String password,
                                   HttpSession session) {
@@ -41,7 +41,7 @@ public class LoginController {
         }
 
         return mav;
-    }
+    }*/
 
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {

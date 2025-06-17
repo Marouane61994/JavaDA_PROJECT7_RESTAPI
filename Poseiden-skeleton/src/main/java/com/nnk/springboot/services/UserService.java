@@ -2,7 +2,9 @@ package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -12,11 +14,15 @@ import java.util.List;
  * Service class for managing {@link User} entities.
  * Provides business logic for CRUD operations on users.
  */
+@Data
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     /**
      * Retrieves all users from the database.
      *
@@ -42,7 +48,8 @@ public class UserService {
      * @param user the {@link User} entity to create
      */
     public void create(User user) {
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepository.save(user);
     }
     /**
@@ -55,8 +62,14 @@ public class UserService {
      */
     public User update(Integer id, User updatedUser) {
         User existingUser = findById(id);
-        updatedUser.setId(id);
-        updatedUser.setPassword(updatedUser.getPassword());
+        existingUser.setFullname(updatedUser.getFullname());
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setRole(updatedUser.getRole());
+
+
+        if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
+            existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
         return userRepository.save(updatedUser);
     }
 
