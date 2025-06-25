@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig{
+public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -23,8 +23,9 @@ public class SecurityConfig{
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/app/login","/","/user/add","/user/validate", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/user/list").hasRole("ADMIN")
+                        .requestMatchers("/app/login", "/", "/user/add", "/user/validate", "/css/**", "/js/**").permitAll()
+                       .requestMatchers("/user/list")
+                       .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -36,6 +37,8 @@ public class SecurityConfig{
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
+                ).exceptionHandling(ex -> ex
+                        .accessDeniedPage("/app/error")
                 );
 
         return http.build();

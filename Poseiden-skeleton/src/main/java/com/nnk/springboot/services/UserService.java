@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     /**
      * Retrieves all users from the database.
      *
@@ -31,6 +33,7 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
     /**
      * Retrieves a user by their ID.
      *
@@ -42,6 +45,7 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + id));
     }
+
     /**
      * Creates a new user and saves it to the database.
      *
@@ -49,9 +53,9 @@ public class UserService {
      */
     public void create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userRepository.save(user);
     }
+
     /**
      * Updates an existing user with new values.
      *
@@ -70,7 +74,7 @@ public class UserService {
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
             existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
-        return userRepository.save(updatedUser);
+        return userRepository.save(existingUser);
     }
 
     /**
@@ -83,5 +87,14 @@ public class UserService {
         User user = findById(id);
         userRepository.delete(user);
     }
+
+    public User findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return user;
+    }
+
 }
 

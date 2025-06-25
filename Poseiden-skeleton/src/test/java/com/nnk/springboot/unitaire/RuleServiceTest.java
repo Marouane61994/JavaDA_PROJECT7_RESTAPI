@@ -57,8 +57,6 @@ class RuleServiceTest {
         assertFalse(result.isPresent());
     }
 
-
-
     @Test
     void testUpdate_Success() {
         RuleName updated = new RuleName();
@@ -90,7 +88,5 @@ class RuleServiceTest {
 
         assertEquals("Invalid RuleName ID: 1", exception.getMessage());
     }
-
-
 }
 

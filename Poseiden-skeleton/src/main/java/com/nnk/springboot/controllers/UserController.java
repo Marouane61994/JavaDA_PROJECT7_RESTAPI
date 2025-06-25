@@ -1,5 +1,6 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.config.UserConstraint;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.UserService;
 import jakarta.validation.Valid;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -27,12 +29,19 @@ public class UserController {
     }
 
     @PostMapping("/user/validate")
-    public String validate(@Valid User user, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            userService.create(user);
-            return "redirect:/user/list";
+    public String validate(@Validated(UserConstraint.class) User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "user/add";
         }
-        return "user/add";
+
+        try {
+            userService.create(user);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMsg", e.getMessage());
+            return "user/add";
+        }
+
+        return "redirect:/user/list";
     }
 
     @GetMapping("/user/update/{id}")

@@ -25,24 +25,6 @@ public class LoginController {
         return mav;
     }
 
-   /** @PostMapping("login")
-    public ModelAndView loginPost(@RequestParam String username,
-                                  @RequestParam String password,
-                                  HttpSession session) {
-        ModelAndView mav = new ModelAndView();
-        User user = userRepository.findByUsername(username);
-
-        if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("user", user);
-            mav.setViewName("redirect:/trade/list");
-        } else {
-            mav.addObject("error", "Invalid username or password");
-            mav.setViewName("login");
-        }
-
-        return mav;
-    }*/
-
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
