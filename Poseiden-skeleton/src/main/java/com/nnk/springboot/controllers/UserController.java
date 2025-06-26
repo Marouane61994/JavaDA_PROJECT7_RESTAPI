@@ -5,6 +5,7 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/user/list")
     public String home(Model model) {
         model.addAttribute("users", userService.findAll());

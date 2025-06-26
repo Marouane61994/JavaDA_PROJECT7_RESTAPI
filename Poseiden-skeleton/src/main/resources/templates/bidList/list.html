@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
@@ -15,16 +16,19 @@
 			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
 			<a href="/ruleName/list">Rule</a>&nbsp;|&nbsp;
-			<a href="/users/list">User management</a>
+			<a href="/user/list">User management</a>
 		</div>
 		<div class="col-6 text-right">
-			Logged in user: <b th:text="${#authentication.name}">[Username]</b> |
-			Role: <b th:text="${user.role}">[Role]</b>
+			Logged in
+			<span sec:authorize="hasRole('USER')">USER</span>
+			<span sec:authorize="hasRole('ADMIN')">ADMIN</span>
 
-			<form th:action="@{/logout}" method="post" style="display:inline;">
+
+			<form th:action="@{/logout}" method="post" >
 				<input type="submit" value="Logout"/>
 			</form>
 		</div>
+
 
 
 	</div>

@@ -4,11 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig {
 
@@ -24,8 +26,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/app/login", "/", "/user/add", "/user/validate", "/css/**", "/js/**").permitAll()
-                       .requestMatchers("/user/list")
-                       .hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasRole("ADMIN")
+                        .requestMatchers("/bidList/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/login", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -35,7 +38,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/app/login?logout")
                         .permitAll()
                 ).exceptionHandling(ex -> ex
                         .accessDeniedPage("/app/error")
