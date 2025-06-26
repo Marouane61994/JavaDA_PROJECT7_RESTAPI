@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPassword {
-    String message() default "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un symbole.";
+    String message() default "The password must contain at least 8 characters, one capital letter, one number and one symbol.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

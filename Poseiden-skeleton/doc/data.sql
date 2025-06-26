@@ -86,12 +86,12 @@ CREATE TABLE Users (
   username VARCHAR(125) unique not NULL,
   password VARCHAR(125) not NULL,
   fullname VARCHAR(125) not NULL,
-  role VARCHAR(125),
+  role VARCHAR(125) not NULL,
   PRIMARY KEY (id)
 );
 
 INSERT INTO Users(fullname, username, password, role)
-VALUES ("Administrator", "admin", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "ADMIN");
+VALUES ("Administrator", "admin", "$2a$10$Wo2NwoQNdXTtV4KoJwcaQ.w8W5b1ZRcJGcZaPHpZ/O3E3kjEmNRTS", "ADMIN");-- Mot de passe : Password1@ --
 
 INSERT INTO Users(fullname, username, password, role)
-VALUES ("User", "user", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "USER");
+VALUES ("User", "user", "$2a$10$Wo2NwoQNdXTtV4KoJwcaQ.w8W5b1ZRcJGcZaPHpZ/O3E3kjEmNRTS", "USER");-- Mot de passe : Password1@ --

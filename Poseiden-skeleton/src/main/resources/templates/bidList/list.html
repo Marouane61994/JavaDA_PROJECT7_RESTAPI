@@ -19,11 +19,9 @@
 			<a href="/user/list">User management</a>
 		</div>
 		<div class="col-6 text-right">
-			Logged in
-			<span sec:authorize="hasRole('USER')">USER</span>
-			<span sec:authorize="hasRole('ADMIN')">ADMIN</span>
-
-
+			Logged in user:
+			<span sec:authorize="hasRole('USER')">user</span>
+			<span sec:authorize="hasRole('ADMIN')">admin</span>
 			<form th:action="@{/logout}" method="post" >
 				<input type="submit" value="Logout"/>
 			</form>
