@@ -3,13 +3,14 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.config.CustomUserDetails;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
+@Data
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

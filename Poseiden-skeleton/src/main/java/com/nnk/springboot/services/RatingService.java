@@ -2,6 +2,7 @@ package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Service layer for managing {@link Rating} entities.
  * Provides business logic for CRUD operations on Rating objects.
  */
+@Data
 @Service
 public class RatingService {
 

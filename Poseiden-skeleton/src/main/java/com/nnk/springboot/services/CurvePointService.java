@@ -2,6 +2,7 @@ package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Service class that handles business logic related to {@link CurvePoint}.
  * It provides methods to perform CRUD operations via the {@link CurvePointRepository}.
  */
+@Data
 @Service
 public class CurvePointService {
 

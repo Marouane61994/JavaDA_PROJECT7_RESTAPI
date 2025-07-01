@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Users, RuleName, Rating, CurvePoint, Trade, BidList;
+DROP TABLE IF EXISTS Users, RuleName, Rating, CurvePoint, Trade, BidList,users_seq;
 
 CREATE TABLE BidList (
   bid_list_id INT NOT NULL AUTO_INCREMENT,
@@ -89,6 +89,13 @@ CREATE TABLE Users (
   role VARCHAR(125) not NULL,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE `users_seq` (
+  `next_val` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+insert into users_seq
+values (1000);
 
 INSERT INTO Users(fullname, username, password, role)
 VALUES ("Administrator", "admin", "$2a$10$Wo2NwoQNdXTtV4KoJwcaQ.w8W5b1ZRcJGcZaPHpZ/O3E3kjEmNRTS", "ADMIN");-- Mot de passe : Password1@ --

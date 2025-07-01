@@ -14,8 +14,8 @@ import java.util.Optional;
  * Service class for managing {@link RuleName} entities.
  * Provides business logic for CRUD operations on RuleName.
  */
-@Service
 @Data
+@Service
 public class RuleNameService {
 
     @Autowired

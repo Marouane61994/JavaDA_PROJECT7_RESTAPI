@@ -4,7 +4,6 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +51,9 @@ public class UserService {
      * @param user the {@link User} entity to create
      */
     public void create(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("The username already exists");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -87,14 +89,5 @@ public class UserService {
         User user = findById(id);
         userRepository.delete(user);
     }
-
-    public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return user;
-    }
-
 }
 

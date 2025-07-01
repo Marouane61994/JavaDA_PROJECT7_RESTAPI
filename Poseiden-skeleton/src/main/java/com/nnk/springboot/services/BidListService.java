@@ -2,6 +2,7 @@ package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Service class that handles business logic for BidList entities.
  * Provides methods for CRUD operations on bid data.
  */
+@Data
 @Service
 public class BidListService {
 
