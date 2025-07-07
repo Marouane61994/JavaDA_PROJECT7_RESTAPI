@@ -8,6 +8,7 @@ import com.nnk.springboot.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
@@ -15,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
 
     @Mock
     private UserRepository userRepository;
@@ -31,7 +36,7 @@ class UserServiceTest {
         user.setId(1);
         user.setUsername("Marouane");
         user.setFullname("Marouane GHANEM");
-        user.setPassword("123456789");
+        user.setPassword("Marouane1@");
         user.setRole("USER");
     }
 
@@ -62,20 +67,35 @@ class UserServiceTest {
 
     @Test
     void testUpdateUser() {
+        User existingUser = new User();
+        existingUser.setId(1);
+        existingUser.setUsername("olduser");
+        existingUser.setFullname("Old Name");
+        existingUser.setPassword("oldpass1@");
+        existingUser.setRole("USER");
+
         User updatedUser = new User();
         updatedUser.setUsername("updateduser");
         updatedUser.setFullname("Updated Name");
-        updatedUser.setPassword("newpass");
+        updatedUser.setPassword("newpass1@");
         updatedUser.setRole("ADMIN");
 
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.findById(1)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
+            User saved = invocation.getArgument(0);
+            saved.setId(1); // simulate persist with id
+            return saved;
+        });
+        when(passwordEncoder.encode(any(CharSequence.class))).thenReturn("encodedPassword");
 
         User result = userService.update(1, updatedUser);
 
+        assertEquals(1, result.getId()); // <-- ici la correction
         assertEquals("updateduser", result.getUsername());
-        assertEquals(1, updatedUser.getId());
-        verify(userRepository).save(updatedUser);
+        assertEquals("Updated Name", result.getFullname());
+        assertEquals("encodedPassword", result.getPassword());
+        assertEquals("ADMIN", result.getRole());
+        verify(userRepository).save(any(User.class));
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.nnk.springboot.integration.controller;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,15 +10,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
+@WithMockUser(username = "user", roles = "USER")
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -67,13 +68,11 @@ public class BidControllerTest {
 
     @Test
     public void testPostUpdate_withValidBidList_shouldRedirect() throws Exception {
-
         BidList bid = new BidList();
         bid.setAccount("Initial Account");
         bid.setType("Initial Type");
         bid.setBidQuantity(5.0);
         bid = bidListRepository.save(bid);
-
 
         mockMvc.perform(post("/bidList/update/" + bid.getBidListId())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -83,7 +82,6 @@ public class BidControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/bidList/list"));
 
-
         BidList updated = bidListRepository.findById(bid.getBidListId()).orElseThrow();
         assertThat(updated.getAccount()).isEqualTo("Updated Account");
         assertThat(updated.getType()).isEqualTo("Updated Type");
@@ -92,13 +90,11 @@ public class BidControllerTest {
 
     @Test
     public void testPostUpdate_withErrors_shouldReturnForm() throws Exception {
-
         BidList bid = new BidList();
         bid.setAccount("Valid Account");
         bid.setType("Valid Type");
         bid.setBidQuantity(20.0);
         bid = bidListRepository.save(bid);
-
 
         mockMvc.perform(post("/bidList/update/" + bid.getBidListId())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -110,11 +106,8 @@ public class BidControllerTest {
                 .andExpect(model().attributeHasFieldErrors("bidList", "account"))
                 .andExpect(content().string(containsString("Account is mandatory")));
 
-
         BidList unchanged = bidListRepository.findById(bid.getBidListId()).orElseThrow();
         assertThat(unchanged.getAccount()).isEqualTo("Valid Account");
         assertThat(unchanged.getType()).isEqualTo("Valid Type");
     }
 }
-
-
